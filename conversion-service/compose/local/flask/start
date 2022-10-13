@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+# Just in case you need to add or modifie models, please uncomment those lines:
+# flask db init
+# flask db migrate -m "Initial migration."
+flask db upgrade
+flask run --host=0.0.0.0
