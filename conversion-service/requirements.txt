@@ -4,4 +4,7 @@ flower==1.0.0
 Flask-Migrate==3.1.0
 Flask-SQLAlchemy==2.5.1
 Flask-CeleryExt==0.3.4
+flask-jwt-extended
+Flask-RESTful
 psycopg2-binary==2.9.1
+PyJWT

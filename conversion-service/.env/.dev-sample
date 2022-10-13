@@ -4,3 +4,4 @@ DATABASE_URL=postgresql://flask_celery:flask_celery@db/flask_celery
 SECRET_KEY=my_precious
 CELERY_BROKER_URL=redis://redis:6379/0
 CELERY_RESULT_BACKEND=redis://redis:6379/0
+JWT_SECRET_KEY=frase-secreta

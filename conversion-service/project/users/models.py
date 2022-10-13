@@ -13,3 +13,12 @@ class User(db.Model):
         self.username = username
         self.email = email
         self.password = password
+    
+    def check_auth(self, password):
+        if self.password == password:
+            return True
+        return False
+
+    @staticmethod
+    def get_by_username(username):
+        return User.query.filter_by(username=username).first()

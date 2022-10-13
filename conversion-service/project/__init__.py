@@ -1,9 +1,11 @@
 import os
 
-from flask import Flask
+from flask import Flask, request
+from flask_restful import Api, Resource
 from flask_celeryext import FlaskCeleryExt
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from flask_jwt_extended import JWTManager
 
 from project.celery_utils import make_celery
 from project.config import config
@@ -33,6 +35,9 @@ def create_app(config_name=None):
     # register blueprints
     from project.users import users_blueprint
     app.register_blueprint(users_blueprint)
+
+    # add auth
+    JWTManager(app)
 
     # shell context for flask cli
     @app.shell_context_processor

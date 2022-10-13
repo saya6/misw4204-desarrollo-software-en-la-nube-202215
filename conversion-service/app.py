@@ -1,8 +1,9 @@
-from project import create_app, ext_celery
+
+from project import create_app, ext_celery, Api, db
+from project.authentication.auth import AuthenticationResource
 
 app = create_app()
+api = Api(app)
 celery = ext_celery.celery
 
-@app.route("/")
-def hello_world():
-    return {"status": "ok"}, 200
+api.add_resource(AuthenticationResource, '/users/authenticate', resource_class_kwargs={'db': db})
