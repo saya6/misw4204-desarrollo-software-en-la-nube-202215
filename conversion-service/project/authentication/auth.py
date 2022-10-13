@@ -3,10 +3,6 @@ from project.users.models import User
 from flask_jwt_extended import JWTManager, create_access_token
 
 class AuthenticationResource(Resource):
-    def __init__(self, db):
-        self.__db__ = db       
-        super().__init__()
-
     def post(self):
         username=request.json['username']
         password=request.json['password']

@@ -32,10 +32,6 @@ def create_app(config_name=None):
     migrate.init_app(app, db)
     ext_celery.init_app(app)
 
-    # register blueprints
-    from project.users import users_blueprint
-    app.register_blueprint(users_blueprint)
-
     # add auth
     JWTManager(app)
 

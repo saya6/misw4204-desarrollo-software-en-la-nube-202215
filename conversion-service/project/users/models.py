@@ -8,11 +8,16 @@ class User(db.Model):
     username = db.Column(db.String(128), unique=True, nullable=False)
     email = db.Column(db.String(128), unique=True, nullable=False)
     password = db.Column(db.String(128), nullable=False)
+    conversion_tasks = db.relationship('ConversionTask', cascade='all, delete, delete-orphan')
 
     def __init__(self, username, email, password, *args, **kwargs):
         self.username = username
         self.email = email
         self.password = password
+
+    def add_new_task(self, task):
+        self.conversion_tasks.append(task)
+        db.session.commit()
     
     def check_auth(self, password):
         if self.password == password:
