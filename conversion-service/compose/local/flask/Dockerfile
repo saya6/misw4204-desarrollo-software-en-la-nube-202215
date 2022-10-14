@@ -1,4 +1,4 @@
-FROM python:3.9-slim-buster
+FROM python:3.10-bullseye
 
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -8,11 +8,23 @@ RUN apt-get update \
   && apt-get install -y build-essential \
   # psycopg2 dependencies
   && apt-get install -y libpq-dev \
+  # Audio tools
+  && apt-get install -y ffmpeg libvorbis-dev \
   # Additional dependencies
-  && apt-get install -y telnet netcat \
+  && apt-get install -y telnet netcat nasm \
   # cleaning up unused files
   && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
   && rm -rf /var/lib/apt/lists/*
+
+# Build custom libav library for project purposes
+RUN git clone git://git.libav.org/libav.git \
+  && cd libav \
+  && ./configure --enable-libvorbis --disable-doc --enable-runtime-cpudetect \
+  && make -j$(nproc) \
+  && make install
+
+# clean not longer required libav library
+RUN rm -rf libav
 
 # Requirements are installed here to ensure they will be cached.
 COPY ./requirements.txt /requirements.txt
