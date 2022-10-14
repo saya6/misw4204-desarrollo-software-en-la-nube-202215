@@ -15,6 +15,8 @@ class BaseConfig:
     
     JWT_SECRET_KEY  = os.environ.get("JWT_SECRET_KEY", 'frase-secreta')
 
+    UPLOAD_FOLDER = os.environ.get("UPLOAD_FOLDER", "/datastore")
+
 
 class DevelopmentConfig(BaseConfig):
     """Development configuration"""
