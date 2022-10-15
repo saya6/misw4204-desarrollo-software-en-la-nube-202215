@@ -27,3 +27,13 @@ class User(db.Model):
     @staticmethod
     def get_by_username(username):
         return User.query.filter_by(username=username).first()
+
+    @staticmethod
+    def get_by_email(email):
+        return User.query.filter_by(email=email).first()
+
+    @staticmethod
+    def create_user(user):
+        db.session.add(user)
+        db.session.commit()
+        return user
