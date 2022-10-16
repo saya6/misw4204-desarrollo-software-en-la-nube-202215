@@ -57,3 +57,18 @@ class ConversionTask(db.Model):
     def validate_file(filename):
         file_parts = filename.split(".")
         return ConversionTask.validate_format(file_parts[-1])
+    
+    @staticmethod
+    def get_tasks(order, max):
+
+        order_by = ConversionTask.id.asc()
+        if order > 0:
+            order_by = ConversionTask.id.desc()
+
+        sentence = ConversionTask.query.order_by(order_by)
+
+        if max:
+            sentence = ConversionTask.query.order_by(order_by).limit(max)
+
+        return sentence.all()
+

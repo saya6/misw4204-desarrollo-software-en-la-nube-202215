@@ -38,4 +38,7 @@ class ConversionTaskResource(Resource):
         if ce.convert():
             return {"id": current_user.conversion_tasks[-1].id}, 200
         return {"status":"Error", "response": "conversion issue"}, 422
+
+    def get(self, order = 0, max=None):
+        return ConversionTask.get_tasks(order, max)  
         
