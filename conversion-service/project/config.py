@@ -17,6 +17,7 @@ class BaseConfig:
 
     UPLOAD_FOLDER = os.environ.get("UPLOAD_FOLDER", "/datastore")
 
+    CELERY_INCLUDE = ('project.task_daemon',)
 
 class DevelopmentConfig(BaseConfig):
     """Development configuration"""

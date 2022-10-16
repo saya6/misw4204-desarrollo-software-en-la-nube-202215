@@ -1,4 +1,3 @@
-
 from project import create_app, ext_celery, Api, db
 from project.authentication.auth import AuthenticationResource
 from project.conversion_tasks.view import ConversionTaskResource

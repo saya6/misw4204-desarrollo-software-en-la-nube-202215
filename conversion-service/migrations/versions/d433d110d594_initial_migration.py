@@ -35,7 +35,7 @@ def upgrade():
     sa.Column('file_new_format', sa.Enum('MP3', 'WAV', 'OGG', name='conversiontaskformats'), nullable=False),
     sa.Column('file_source_path', sa.String(length=250), nullable=False),
     sa.Column('file_converted_path', sa.String(length=250), nullable=False),
-    sa.Column('task_status', sa.Enum('UPLOADED', 'PROCESSED', name='conversiontaskstatus'), nullable=False),
+    sa.Column('task_status', sa.Enum('UPLOADED', 'PROCESSING', 'PROCESSED', name='conversiontaskstatus'), nullable=False),
     sa.Column('timeStamp', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['id_user'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
