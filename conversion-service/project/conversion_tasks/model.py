@@ -11,7 +11,7 @@ class ConversionTaskStatus(enum.Enum):
 class ConversionTaskFormats(enum.Enum):
     MP3 = "MP3"
     WAV = "WAV"
-    WMA = "WMA"
+    OGG = "OGG"
 
 class ConversionTask(db.Model):
 
@@ -39,6 +39,15 @@ class ConversionTask(db.Model):
         self.file_format = ConversionTaskFormats[file_parts[-1].upper()]
         self.file_converted_path = ""
         return self
+
+    def get_file_format(self):
+        return self.file_format
+
+    def get_new_format(self):
+        return self.file_new_format
+
+    def get_file_converted_path(self):
+        return self.file_converted_path
 
     @staticmethod
     def validate_format(file_new_format):

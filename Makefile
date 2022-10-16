@@ -8,7 +8,7 @@ run: build
 	cd conversion-service && docker compose up -d
 
 delete:
-	cd conversion-service && docker compose down
+	cd conversion-service && docker compose down --remove-orphans #--volumes
 
 freeze:
 	cd conversion-service && python3 -m pip freeze
