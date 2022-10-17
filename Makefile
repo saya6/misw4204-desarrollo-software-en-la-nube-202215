@@ -8,7 +8,16 @@ run: build
 	cd conversion-service && docker compose up -d
 
 delete:
-	cd conversion-service && docker compose down --remove-orphans #--volumes
+	cd conversion-service && docker compose down --remove-orphans --volumes 
+
+prune:
+	cd conversion-service && docker compose down --remove-orphans --volumes --rmi local
 
 freeze:
 	cd conversion-service && python3 -m pip freeze
+
+start-metrics-services:
+	docker compose up -d
+
+metrics-prune:
+	docker compose down --remove-orphans --volumes --rmi local
