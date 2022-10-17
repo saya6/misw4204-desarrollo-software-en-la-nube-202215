@@ -1,4 +1,3 @@
-from pickle import FALSE
 from project import db
 from sqlalchemy import DateTime
 import datetime
@@ -6,6 +5,7 @@ import enum
 
 class ConversionTaskStatus(enum.Enum):
     UPLOADED = "UPLOADED"
+    PROCESSING = "PROCESSING"
     PROCESSED = "PROCESSED"
 
 class ConversionTaskFormats(enum.Enum):
@@ -40,14 +40,28 @@ class ConversionTask(db.Model):
         self.file_converted_path = ""
         return self
 
+    def set_file_converted_path(self, new_path):
+        self.file_converted_path = new_path
+
+    def get_file_source_path(self):
+        return self.file_source_path
+
     def get_file_format(self):
         return self.file_format
+
+    def get_file_converted_path(self):
+        return self.file_converted_path
 
     def get_new_format(self):
         return self.file_new_format
 
-    def get_file_converted_path(self):
-        return self.file_converted_path
+    def update_status_to_processing(self):
+        self.task_status = ConversionTaskStatus.PROCESSING
+        db.session.commit()
+
+    def update_status_to_processed(self):
+        self.task_status = ConversionTaskStatus.PROCESSED
+        db.session.commit()
 
     @staticmethod
     def validate_format(file_new_format):
@@ -57,3 +71,11 @@ class ConversionTask(db.Model):
     def validate_file(filename):
         file_parts = filename.split(".")
         return ConversionTask.validate_format(file_parts[-1])
+
+    @staticmethod
+    def get_unprocessed_tasks():
+        return ConversionTask.query.filter_by(task_status=ConversionTaskStatus.UPLOADED)
+    
+    @staticmethod
+    def get_tasks_by_id(id):
+        return ConversionTask.query.filter_by(id=id).first()

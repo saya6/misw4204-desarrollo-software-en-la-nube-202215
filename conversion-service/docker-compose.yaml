@@ -12,6 +12,7 @@ services:
     # so if we change code on the host, code in the docker container will also be changed
     volumes:
       - .:/app
+      - datastore:/datastore
     ports:
       - 5010:5000
     env_file:
@@ -98,6 +99,27 @@ services:
       - redis
       - db
 
+  daemon:
+    build:
+      context: .
+      dockerfile: ./compose/local/flask/Dockerfile
+    image: conversion_service_daemon
+    command: /start-daemon
+    volumes:
+      - .:/app
+      - datastore:/datastore
+    env_file:
+      - .env/.dev-sample
+    environment:
+      - FLASK_APP=app
+    depends_on:
+      - db
+      - web
+      - celery_worker
+      - celery_beat
+      - flower
+
 volumes:
+  datastore:
   postgres_data:
   pgadmin-data:
