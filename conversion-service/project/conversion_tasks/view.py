@@ -15,15 +15,19 @@ class ConversionTaskResource(Resource):
             return {"status":"Error", "response": "bad formatting target"}, 401
         # Save the file into the disk
         file_identificator = uuid.uuid4()
-        full_path = "/datastore/{}.{}".format(file_identificator,filename)
+        full_unique_filename = "{}.{}".format(file_identificator,filename)
+        full_path = "/datastore/{}".format(full_unique_filename)
         file_to_upload.save(full_path)
         new_convertion_task = ConversionTask(filename, new_format, full_path).prepare()
         converted_filename_parts = filename.split(".")[:-1]
         converted_filename = '.'.join(converted_filename_parts)
-        converted_file_full_path = "/datastore/{}.{}.{}".format(file_identificator, converted_filename, new_format.lower())
+        full_converted_unique_filename = "{}.{}.{}".format(file_identificator, converted_filename, new_format.lower())
+        converted_file_full_path = "/datastore/{}".format(full_converted_unique_filename)
         new_convertion_task.set_file_converted_path(converted_file_full_path)
         current_user = User.get_by_username("admin") # TODO: change me!
         current_user.add_new_task(new_convertion_task)        
-        return {"id": current_user.conversion_tasks[-1].id}, 200
-
-        
+        return {
+            "id": current_user.conversion_tasks[-1].id,
+            "uploaded_unique_filename": full_unique_filename,
+            "converted_unique_filename": full_converted_unique_filename
+        }, 200
