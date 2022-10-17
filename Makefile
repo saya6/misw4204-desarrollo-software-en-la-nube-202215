@@ -15,3 +15,9 @@ prune:
 
 freeze:
 	cd conversion-service && python3 -m pip freeze
+
+start-metrics-services:
+	docker compose up -d
+
+metrics-prune:
+	docker compose down --remove-orphans --volumes --rmi local
