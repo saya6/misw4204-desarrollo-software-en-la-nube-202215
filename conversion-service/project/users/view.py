@@ -15,10 +15,10 @@ class SignInResource(Resource):
         password2=request.json['password2']
         email=request.json['email']
 
-        if(re.fullmatch(Constante.EMAIL_REGEX, email)): 
+        if(not re.fullmatch(Constante.EMAIL_REGEX, email)): 
             return "El formato del correo no es correcto", 401 
 
-        if password1 == password2 :
+        if password1 != password2 :
             return "Los passwords deben ser iguales", 401
 
         foundUser = User.get_by_username(username) 
