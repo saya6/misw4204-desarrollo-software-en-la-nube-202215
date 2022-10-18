@@ -3,6 +3,7 @@ from project.users.models import User
 from project.conversion_engine.engine import ConversionEngine
 from .model import ConversionTask
 import uuid
+import json
 
 class ConversionTaskResource(Resource):
     def post(self):
@@ -33,4 +34,4 @@ class ConversionTaskResource(Resource):
         }, 200
 
     def get(self, order = 0, max=None):
-        return ConversionTask.get_tasks(order, max)  
+        return json.dumps(ConversionTask.get_tasks(order, max))  
