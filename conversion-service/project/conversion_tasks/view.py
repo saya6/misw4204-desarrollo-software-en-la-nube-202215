@@ -4,6 +4,7 @@ from project.conversion_engine.engine import ConversionEngine
 from .model import ConversionTask, ConversionTaskSchema
 import uuid
 import logging
+import json
 
 conversion_task_schema = ConversionTaskSchema()
 
@@ -37,5 +38,7 @@ class ConversionTaskResource(Resource):
 
     def get(self, order = 0, max=None):
         tasks = ConversionTask.get_tasks(order, max)
-        logging.warning(tasks)
-        return [conversion_task_schema.dump(task) for task in tasks]
+        response = [json.dumps(task) for task in tasks]
+        logging.warning(response)
+        
+        return response

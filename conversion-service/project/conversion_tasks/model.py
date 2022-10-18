@@ -1,6 +1,5 @@
 from project import db
 from sqlalchemy import DateTime
-from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 import datetime
 import enum
 
@@ -96,8 +95,3 @@ class ConversionTask(db.Model):
     def get_tasks_by_id(id):
         return ConversionTask.query.filter_by(id=id).first()
 
-class ConversionTaskSchema(SQLAlchemyAutoSchema):
-    class Meta:
-        model = ConversionTask
-        include_relationships = False
-        load_instance = True
