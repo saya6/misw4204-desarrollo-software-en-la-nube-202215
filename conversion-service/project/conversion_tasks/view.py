@@ -37,5 +37,5 @@ class ConversionTaskResource(Resource):
 
     def get(self, order = 0, max=None):
         tasks = ConversionTask.get_tasks(order, max)
-        logging.warning('Tareas obtenidas= ' + tasks)
+        logging.warning(tasks)
         return [conversion_task_schema.dump(task) for task in tasks]
