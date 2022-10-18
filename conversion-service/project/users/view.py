@@ -33,5 +33,4 @@ class SignInResource(Resource):
 
         User.create_user(User(username=username, password = password1, email = email))
         
-        jwt = create_access_token(identity=username)
-        return {"status":"created", "JWT": jwt}, 200
+        return {"status":"created"}, 200

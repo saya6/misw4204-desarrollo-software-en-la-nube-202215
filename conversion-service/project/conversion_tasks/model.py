@@ -1,9 +1,10 @@
 from project import db
 from sqlalchemy import DateTime
+from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
+from marshmallow import fields
+from marshmallow_enum import EnumField
 import datetime
 import enum
-import json
-from json import JSONEncoder
 
 class ConversionTaskStatus(enum.Enum):
     UPLOADED = "UPLOADED"
@@ -97,7 +98,13 @@ class ConversionTask(db.Model):
     def get_tasks_by_id(id):
         return ConversionTask.query.filter_by(id=id).first()
 
+class ConversionTaskSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = ConversionTask
+        include_relationships = True
+        load_instance = True
 
-class ConversionTaskEncoder(json.JSONEncoder):
-    def default(self, o):
-            return o.__dict__    
+    file_format = EnumField(ConversionTaskFormats)
+    file_new_format = EnumField(ConversionTaskFormats)
+    task_status = EnumField(ConversionTaskStatus)
+    timeStamp = fields.DateTime()
