@@ -1,5 +1,6 @@
 from project import db
 from sqlalchemy import DateTime
+from marshmallow import fields, Schema
 import datetime
 import enum
 
@@ -12,6 +13,7 @@ class ConversionTaskFormats(enum.Enum):
     MP3 = "MP3"
     WAV = "WAV"
     OGG = "OGG"
+
 
 class ConversionTask(db.Model):
 
@@ -94,3 +96,8 @@ class ConversionTask(db.Model):
     def get_tasks_by_id(id):
         return ConversionTask.query.filter_by(id=id).first()
 
+class ConversionTaskSchema(Schema):
+    class Meta:
+        model = ConversionTask
+        include_relationships = False
+        load_instance = True

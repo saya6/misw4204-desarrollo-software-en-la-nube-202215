@@ -1,9 +1,10 @@
 from project import Resource, request
 from project.users.models import User 
 from project.conversion_engine.engine import ConversionEngine
-from .model import ConversionTask
+from .model import ConversionTask, ConversionTaskSchema
 import uuid
-import json
+
+conversion_task_schema = ConversionTaskSchema()
 
 class ConversionTaskResource(Resource):
     def post(self):
@@ -34,4 +35,4 @@ class ConversionTaskResource(Resource):
         }, 200
 
     def get(self, order = 0, max=None):
-        return json.dumps(ConversionTask.get_tasks(order, max))  
+        return [conversion_task_schema.dump(task) for task in ConversionTask.get_tasks(order, max)]
