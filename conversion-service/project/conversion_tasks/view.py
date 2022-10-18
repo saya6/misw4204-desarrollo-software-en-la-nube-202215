@@ -1,7 +1,7 @@
 from project import Resource, request
 from project.users.models import User 
 from project.conversion_engine.engine import ConversionEngine
-from .model import ConversionTask, ConversionTaskEncoder
+from .model import ConversionTask
 import uuid
 import logging
 import json
