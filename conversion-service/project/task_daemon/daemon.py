@@ -1,4 +1,6 @@
 import time
+
+from project.mail_dispatcher.mailer import MailDispatcher
 from project.conversion_tasks.model import ConversionTask
 from project.conversion_engine.engine import ConversionEngine
 from project import ext_celery
@@ -14,8 +16,16 @@ def dispatch_task(task_id, source_file_format, source_file_path, taget_file_form
 
     cetask.build()
     cetask.convert()
-    ConversionTask.get_tasks_by_id(task_id).update_status_to_processed()    
-    # TODO: send mail to user
+    current_task = ConversionTask.get_tasks_by_id(task_id)
+    current_task.update_status_to_processed()
+    email = MailDispatcher(
+        receiver= current_task.user.email,
+        title= "Tu solicitud de conversion ha sido procesada",
+        body= """Hola!
+         Tu solicitud de conversion del archivo archivo a formato '{}'
+         ha finalizado con exito!""".format(taget_file_format)
+    )    
+    email.send_mail()
 
 def run_daemon(app):
     while True:
