@@ -3,6 +3,7 @@ from project.users.models import User
 from project.conversion_engine.engine import ConversionEngine
 from .model import ConversionTask, ConversionTaskSchema
 import uuid
+import logging
 
 conversion_task_schema = ConversionTaskSchema()
 
@@ -35,4 +36,6 @@ class ConversionTaskResource(Resource):
         }, 200
 
     def get(self, order = 0, max=None):
-        return [conversion_task_schema.dump(task) for task in ConversionTask.get_tasks(order, max)]
+        tasks = ConversionTask.get_tasks(order, max)
+        logging.warning('Tareas obtenidas= ' + tasks)
+        return [conversion_task_schema.dump(task) for task in tasks]
