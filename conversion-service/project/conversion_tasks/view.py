@@ -37,7 +37,7 @@ class ConversionTaskResource(Resource):
 
     def get(self, order = 0, max=None):
         tasks = ConversionTask.get_tasks(order, max)
-        logging.warning(type(tasks))
+        logging.warning(type(tasks[0]))
         response = [json.dumps(task, indent=4, cls=ConversionTaskEncoder) for task in tasks]
         logging.warning(response)
         
