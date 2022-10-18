@@ -1,7 +1,7 @@
 from project import Resource, request
 from project.users.models import User 
 from project.conversion_engine.engine import ConversionEngine
-from .model import ConversionTask
+from .model import ConversionTask, ConversionTaskEncoder
 import uuid
 import logging
 import json
@@ -37,7 +37,8 @@ class ConversionTaskResource(Resource):
 
     def get(self, order = 0, max=None):
         tasks = ConversionTask.get_tasks(order, max)
-        response = [json.dumps(task) for task in tasks]
+        
+        response = [json.dumps(task, indent=4, cls=ConversionTaskEncoder) for task in tasks]
         logging.warning(response)
         
         return response

@@ -2,6 +2,8 @@ from project import db
 from sqlalchemy import DateTime
 import datetime
 import enum
+import json
+from json import JSONEncoder
 
 class ConversionTaskStatus(enum.Enum):
     UPLOADED = "UPLOADED"
@@ -95,3 +97,7 @@ class ConversionTask(db.Model):
     def get_tasks_by_id(id):
         return ConversionTask.query.filter_by(id=id).first()
 
+
+class ConversionTaskEncoder(json.JSONEncoder):
+    def default(self, o):
+            return o.__dict__    
