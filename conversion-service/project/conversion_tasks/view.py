@@ -3,8 +3,7 @@ from project.users.models import User
 from project.conversion_engine.engine import ConversionEngine
 from .model import ConversionTask, ConversionTaskSchema
 import uuid
-import logging
-import json
+
 
 conversion_task_schema = ConversionTaskSchema();
 
@@ -36,12 +35,6 @@ class ConversionTaskResource(Resource):
             "converted_unique_filename": full_converted_unique_filename
         }, 200
     
-    def get(self, order = 0, max=None):
-        tasks = ConversionTask.get_tasks(order, max)
-        response = [conversion_task_schema.dump(task) for task in tasks]
-        
-        return response
-
     def get(self, id_task):
         task = ConversionTask.get_tasks_by_id(id_task)
         response = conversion_task_schema.dump(task)
@@ -59,4 +52,12 @@ class ConversionTaskResource(Resource):
     def delete(self, id_task):
         task = ConversionTask.get_tasks_by_id(id_task)
         response = conversion_task_schema.dump(task)
+        return response
+
+class TaskResource(Resource):
+        
+    def get(self, order = 0, max=None):
+        tasks = ConversionTask.get_tasks(order, max)
+        response = [conversion_task_schema.dump(task) for task in tasks]
+        
         return response
