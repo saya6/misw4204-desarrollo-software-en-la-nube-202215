@@ -45,7 +45,7 @@ class ConversionTaskResource(Resource):
         if  not ConversionTask.validate_format(new_format):
             return {"status":"Error", "response": "bad formatting target"}, 401
             
-        task = ConversionTask.update_task(id_task)
+        task = ConversionTask.update_task(id_task, new_format)
         response = conversion_task_schema.dump(task)
         return response
 
