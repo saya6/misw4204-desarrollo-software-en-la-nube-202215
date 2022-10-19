@@ -4,6 +4,7 @@ from project.conversion_engine.engine import ConversionEngine
 from .model import ConversionTask, ConversionTaskSchema
 import uuid
 from flask_jwt_extended import jwt_required, get_jwt_identity
+import logging
 
 
 conversion_task_schema = ConversionTaskSchema();
@@ -42,7 +43,7 @@ class ConversionTaskResource(Resource):
     
     @jwt_required()
     def get(self, id_task):
-        if not self.validate_task(id_task, get_jwt_identity()) :
+        if not self.validate_task(id_task, get_jwt_identity()):
            return {"status":"Error", "response": "This tasks owns to other users "}, 401 
 
         task = ConversionTask.get_tasks_by_id(id_task)
@@ -51,7 +52,7 @@ class ConversionTaskResource(Resource):
 
     @jwt_required()
     def put(self, id_task):
-        if not self.validate_task(id_task, get_jwt_identity()) :
+        if not self.validate_task(id_task, get_jwt_identity()):
            return {"status":"Error", "response": "This tasks owns to other users "}, 401 
 
         new_format = request.form.get('new_format')
@@ -64,15 +65,15 @@ class ConversionTaskResource(Resource):
 
     @jwt_required()
     def delete(self, id_task):
-        if not self.validate_task(id_task, get_jwt_identity()) :
-           return {"status":"Error", "response": "This tasks owns to other users "}, 401 
+        if not self.validate_task(id_task, get_jwt_identity()):
+           return {"status":"Error", "response": "This tasks owns to another user"}, 401 
 
         if not ConversionTask.validate_status_task(id_task):
             return {"status":"Error", "response": "Task is not in PROCESSED status"}, 401
 
         ConversionTask.delete_task(id_task)
 
-    def validate_task(id_task, user_from_jwt ): 
+    def validate_task(id_task, user_from_jwt): 
         current_user = User.get_by_username(user_from_jwt)
         response = ConversionTask.validate_task_from_user(id_task, current_user.id)   
         
@@ -84,6 +85,7 @@ class TaskResource(Resource):
     @jwt_required()    
     def get(self, order = 0, max=None):
         user_from_jwt = get_jwt_identity()
+        logging.warning(user_from_jwt)
         current_user = User.get_by_username(user_from_jwt)
         tasks = ConversionTask.get_tasks(current_user.id, order, max)
         response = [conversion_task_schema.dump(task) for task in tasks]
