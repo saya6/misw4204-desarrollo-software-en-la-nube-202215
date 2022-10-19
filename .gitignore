@@ -1,1 +1,2 @@
 conversion-service/celerybeat-schedule
+**/venv/**

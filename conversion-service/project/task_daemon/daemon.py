@@ -3,7 +3,7 @@ import time
 from project.mail_dispatcher.mailer import MailDispatcher
 from project.conversion_tasks.model import ConversionTask
 from project.conversion_engine.engine import ConversionEngine
-from project import ext_celery
+# from project import ext_celery
 
 # @ext_celery.celery.task(id='project.task_daemon.daemon.dispatch_task')
 def dispatch_task(task_id, source_file_format, source_file_path, taget_file_format, target_file_path):
