@@ -38,7 +38,6 @@ class ConversionTaskResource(Resource):
 
     def get(self, order = 0, max=None):
         tasks = ConversionTask.get_tasks(order, max)
-        logging.warning(tasks[0].__dict__)
         response = [conversion_task_schema.dump(task) for task in tasks]
         logging.warning(response)
         

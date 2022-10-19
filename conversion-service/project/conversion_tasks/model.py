@@ -88,7 +88,7 @@ class ConversionTask(db.Model):
         if max:
             sentence = ConversionTask.query.order_by(order_by).limit(max)
 
-        return ConversionTask.query.all()
+        return sentence.all()
 
     @staticmethod
     def get_unprocessed_tasks():
