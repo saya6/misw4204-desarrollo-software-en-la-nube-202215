@@ -83,10 +83,10 @@ class ConversionTask(db.Model):
         if order > 0:
             order_by = ConversionTask.id.desc()
 
-        sentence = ConversionTask.query.filter_by(id = id_user).order_by(order_by)
+        sentence = ConversionTask.query.filter_by(id_user = id_user).order_by(order_by)
 
         if max:
-            sentence = ConversionTask.query.filter_by(id = id_user).order_by(order_by).limit(max)
+            sentence = ConversionTask.query.filter_by(id_user = id_user).order_by(order_by).limit(max)
 
         return sentence.all()
 

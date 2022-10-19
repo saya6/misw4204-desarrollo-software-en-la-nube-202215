@@ -43,7 +43,7 @@ class ConversionTaskResource(Resource):
     
     @jwt_required()
     def get(self, id_task):
-        if not self.validate_task(id_task, get_jwt_identity()):
+        if not validate_task(id_task, get_jwt_identity()):
            return {"status":"Error", "response": "This tasks owns to other users "}, 401 
 
         task = ConversionTask.get_tasks_by_id(id_task)
@@ -52,7 +52,7 @@ class ConversionTaskResource(Resource):
 
     @jwt_required()
     def put(self, id_task):
-        if not self.validate_task(id_task, get_jwt_identity()):
+        if not validate_task(id_task, get_jwt_identity()):
            return {"status":"Error", "response": "This tasks owns to other users "}, 401 
 
         new_format = request.form.get('new_format')
@@ -65,7 +65,7 @@ class ConversionTaskResource(Resource):
 
     @jwt_required()
     def delete(self, id_task):
-        if not self.validate_task(id_task, get_jwt_identity()):
+        if not validate_task(id_task, get_jwt_identity()):
            return {"status":"Error", "response": "This tasks owns to another user"}, 401 
 
         if not ConversionTask.validate_status_task(id_task):
@@ -73,11 +73,11 @@ class ConversionTaskResource(Resource):
 
         ConversionTask.delete_task(id_task)
 
-    def validate_task(id_task, user_from_jwt): 
-        current_user = User.get_by_username(user_from_jwt)
-        response = ConversionTask.validate_task_from_user(id_task, current_user.id)   
-        
-        return response
+def validate_task(id_task, user_from_jwt): 
+    current_user = User.get_by_username(user_from_jwt)
+    response = ConversionTask.validate_task_from_user(id_task, current_user.id)   
+    
+    return response
         
 
 class TaskResource(Resource):
