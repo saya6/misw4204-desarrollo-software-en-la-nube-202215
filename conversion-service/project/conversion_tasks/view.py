@@ -44,7 +44,7 @@ class ConversionTaskResource(Resource):
     @jwt_required()
     def get(self, id_task):
         if not validate_task(id_task, get_jwt_identity()):
-           return {"status":"Error", "response": "This tasks owns to other users "}, 401 
+           return {"status":"Error", "response": "This tasks owns to another user"}, 401 
 
         task = ConversionTask.get_tasks_by_id(id_task)
         response = conversion_task_schema.dump(task)
@@ -53,7 +53,7 @@ class ConversionTaskResource(Resource):
     @jwt_required()
     def put(self, id_task):
         if not validate_task(id_task, get_jwt_identity()):
-           return {"status":"Error", "response": "This tasks owns to other users "}, 401 
+           return {"status":"Error", "response": "This tasks owns to another user"}, 401 
 
         new_format = request.form.get('new_format')
         if  not ConversionTask.validate_format(new_format):
