@@ -118,6 +118,13 @@ services:
       - celery_worker
       - celery_beat
       - flower
+    
+  mail_server:
+    image: rnwood/smtp4dev:v3
+    ports:
+      - 5011:80
+    depends_on:
+      - web
 
 volumes:
   datastore:

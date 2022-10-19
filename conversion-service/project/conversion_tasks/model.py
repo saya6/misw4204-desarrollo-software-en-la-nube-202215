@@ -30,7 +30,7 @@ class ConversionTask(db.Model):
     file_converted_path = db.Column(db.String(250), nullable=False)
     task_status = db.Column(db.Enum(ConversionTaskStatus), nullable=False)
     timeStamp = db.Column(DateTime, default=datetime.datetime.utcnow)
-    db.relationship("User", back_populates="conversion_tasks")
+    user = db.relationship("User", back_populates="conversion_tasks")
 
     def __init__(self, filename, file_new_format, file_source_path, *args, **kwargs):
         self.filename = filename
