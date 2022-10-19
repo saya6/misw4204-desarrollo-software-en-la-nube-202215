@@ -44,7 +44,7 @@ class ConversionTaskResource(Resource):
     def get(self, id_task):
         if not self.validate_task(id_task, get_jwt_identity()) :
            return {"status":"Error", "response": "This tasks owns to other users "}, 401 
-           
+
         task = ConversionTask.get_tasks_by_id(id_task)
         response = conversion_task_schema.dump(task)
         return response
@@ -66,6 +66,10 @@ class ConversionTaskResource(Resource):
     def delete(self, id_task):
         if not self.validate_task(id_task, get_jwt_identity()) :
            return {"status":"Error", "response": "This tasks owns to other users "}, 401 
+
+        if not ConversionTask.validate_status_task(id_task):
+            return {"status":"Error", "response": "Task is not in PROCESSED status"}, 401
+
         ConversionTask.delete_task(id_task)
 
     def validate_task(id_task, user_from_jwt ): 

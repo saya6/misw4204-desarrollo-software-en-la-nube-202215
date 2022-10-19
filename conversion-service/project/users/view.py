@@ -16,20 +16,20 @@ class SignInResource(Resource):
         email=request.json['email']
 
         if(not re.fullmatch(Constante.EMAIL_REGEX, email)): 
-            return "El formato del correo no es correcto", 401 
+            return "Email format is not correct", 401 
 
         if password1 != password2 :
-            return "Los passwords deben ser iguales", 401
+            return "Passwords must be equals", 401
 
         foundUser = User.get_by_username(username) 
 
         if foundUser:
-            return "Usuario ya existe en el sistema", 401
+            return "User was already created in system", 401
 
         foundEmail = User.get_by_email(email) 
         
         if foundEmail:
-            return "Correo ya existe en el sistema", 401           
+            return "Email was already created in system", 401           
 
         User.create_user(User(username=username, password = password1, email = email))
         

@@ -118,6 +118,11 @@ class ConversionTask(db.Model):
     def validate_task_from_user(id_task, id_user):
         return ConversionTask.query.filter_by(id = id_task).filter_by(id_user = id_user).first()    
 
+    @staticmethod
+    def validate_status_task(id_task):
+        task = ConversionTask.get_tasks_by_id(id_task)    
+        return task.task_status == ConversionTaskStatus.PROCESSED
+
 
 class ConversionTaskSchema(SQLAlchemyAutoSchema):
     class Meta:
