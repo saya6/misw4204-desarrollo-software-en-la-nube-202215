@@ -1,11 +1,12 @@
 from project import Resource, request
 from project.users.models import User 
 from project.conversion_engine.engine import ConversionEngine
-from .model import ConversionTask
+from .model import ConversionTask, ConversionTaskSchema
 import uuid
 import logging
 import json
 
+conversion_task_schema = ConversionTaskSchema();
 
 class ConversionTaskResource(Resource):
     def post(self):
@@ -38,7 +39,7 @@ class ConversionTaskResource(Resource):
     def get(self, order = 0, max=None):
         tasks = ConversionTask.get_tasks(order, max)
         logging.warning(tasks[0].__dict__)
-        response = [json.dumps(task, indent=4, cls=ConversionTaskEncoder) for task in tasks]
+        response = [conversion_task_schema.dump(task) for task in tasks]
         logging.warning(response)
         
         return response
