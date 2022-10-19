@@ -77,16 +77,16 @@ class ConversionTask(db.Model):
         return ConversionTask.validate_format(file_parts[-1])
     
     @staticmethod
-    def get_tasks(order, max):
+    def get_tasks(id_user, order, max):
 
         order_by = ConversionTask.id.asc()
         if order > 0:
             order_by = ConversionTask.id.desc()
 
-        sentence = ConversionTask.query.order_by(order_by)
+        sentence = ConversionTask.query.filter_by(id = id_user).order_by(order_by)
 
         if max:
-            sentence = ConversionTask.query.order_by(order_by).limit(max)
+            sentence = ConversionTask.query.filter_by(id = id_user).order_by(order_by).limit(max)
 
         return sentence.all()
 
@@ -113,6 +113,10 @@ class ConversionTask(db.Model):
         task = ConversionTask.query.get_or_404(id)
         db.session.delete(task)
         db.session.commit()
+
+    @staticmethod
+    def validate_task_from_user(id_task, id_user):
+        return ConversionTask.query.filter_by(id = id_task).filter_by(id_user = id_user).first()    
 
 
 class ConversionTaskSchema(SQLAlchemyAutoSchema):
