@@ -45,14 +45,13 @@ class ConversionTaskResource(Resource):
         if  not ConversionTask.validate_format(new_format):
             return {"status":"Error", "response": "bad formatting target"}, 401
             
-        task = ConversionTask.get_tasks_by_id(id_task)
+        task = ConversionTask.update_task(id_task)
         response = conversion_task_schema.dump(task)
         return response
 
     def delete(self, id_task):
-        task = ConversionTask.get_tasks_by_id(id_task)
-        response = conversion_task_schema.dump(task)
-        return response
+        task = ConversionTask.delete_task(id_task)
+        
 
 class TaskResource(Resource):
         
