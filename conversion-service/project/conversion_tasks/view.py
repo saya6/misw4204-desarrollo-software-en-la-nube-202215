@@ -3,11 +3,14 @@ from project.users.models import User
 from project.conversion_engine.engine import ConversionEngine
 from .model import ConversionTask, ConversionTaskSchema
 import uuid
+from flask_jwt_extended import jwt_required
 
 
 conversion_task_schema = ConversionTaskSchema();
 
 class ConversionTaskResource(Resource):
+
+    @jwt_required()
     def post(self):
         file_to_upload = request.files['file']
         filename = request.form.get('filename')
@@ -35,11 +38,13 @@ class ConversionTaskResource(Resource):
             "converted_unique_filename": full_converted_unique_filename
         }, 200
     
+    @jwt_required()
     def get(self, id_task):
         task = ConversionTask.get_tasks_by_id(id_task)
         response = conversion_task_schema.dump(task)
         return response
 
+    @jwt_required()
     def put(self, id_task):
         new_format = request.form.get('new_format')
         if  not ConversionTask.validate_format(new_format):
@@ -49,12 +54,14 @@ class ConversionTaskResource(Resource):
         response = conversion_task_schema.dump(task)
         return response
 
+    @jwt_required()
     def delete(self, id_task):
         task = ConversionTask.delete_task(id_task)
         
 
 class TaskResource(Resource):
-        
+
+    @jwt_required()    
     def get(self, order = 0, max=None):
         tasks = ConversionTask.get_tasks(order, max)
         response = [conversion_task_schema.dump(task) for task in tasks]
