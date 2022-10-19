@@ -1,7 +1,7 @@
 from project import create_app, ext_celery, Api, db
 from project.authentication.auth import AuthenticationResource
 from project.users.view import SignInResource
-from project.conversion_tasks.view import ConversionTaskResource, TaskResource
+from project.conversion_tasks.view import ConversionTaskResource
 from project.file_retriever.view import FileRetrieverResource
 
 app = create_app()
