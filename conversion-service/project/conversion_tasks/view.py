@@ -1,8 +1,11 @@
 from project import Resource, request
 from project.users.models import User 
 from project.conversion_engine.engine import ConversionEngine
-from .model import ConversionTask
+from .model import ConversionTask, ConversionTaskSchema
 import uuid
+
+
+conversion_task_schema = ConversionTaskSchema();
 
 class ConversionTaskResource(Resource):
     def post(self):
@@ -31,3 +34,29 @@ class ConversionTaskResource(Resource):
             "uploaded_unique_filename": full_unique_filename,
             "converted_unique_filename": full_converted_unique_filename
         }, 200
+    
+    def get(self, id_task):
+        task = ConversionTask.get_tasks_by_id(id_task)
+        response = conversion_task_schema.dump(task)
+        return response
+
+    def put(self, id_task):
+        new_format = request.form.get('new_format')
+        if  not ConversionTask.validate_format(new_format):
+            return {"status":"Error", "response": "bad formatting target"}, 401
+            
+        task = ConversionTask.update_task(id_task, new_format)
+        response = conversion_task_schema.dump(task)
+        return response
+
+    def delete(self, id_task):
+        task = ConversionTask.delete_task(id_task)
+        
+
+class TaskResource(Resource):
+        
+    def get(self, order = 0, max=None):
+        tasks = ConversionTask.get_tasks(order, max)
+        response = [conversion_task_schema.dump(task) for task in tasks]
+        
+        return response

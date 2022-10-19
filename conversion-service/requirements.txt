@@ -11,3 +11,6 @@ PyJWT
 pydub
 ffmpeg
 gunicorn
+marshmallow==3.12.1
+marshmallow-sqlalchemy==0.25.0
+marshmallow_enum

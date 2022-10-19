@@ -1,5 +1,8 @@
 from project import db
 from sqlalchemy import DateTime
+from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
+from marshmallow import fields
+from marshmallow_enum import EnumField
 import datetime
 import enum
 
@@ -12,6 +15,7 @@ class ConversionTaskFormats(enum.Enum):
     MP3 = "MP3"
     WAV = "WAV"
     OGG = "OGG"
+
 
 class ConversionTask(db.Model):
 
@@ -71,6 +75,20 @@ class ConversionTask(db.Model):
     def validate_file(filename):
         file_parts = filename.split(".")
         return ConversionTask.validate_format(file_parts[-1])
+    
+    @staticmethod
+    def get_tasks(order, max):
+
+        order_by = ConversionTask.id.asc()
+        if order > 0:
+            order_by = ConversionTask.id.desc()
+
+        sentence = ConversionTask.query.order_by(order_by)
+
+        if max:
+            sentence = ConversionTask.query.order_by(order_by).limit(max)
+
+        return sentence.all()
 
     @staticmethod
     def get_unprocessed_tasks():
@@ -79,3 +97,31 @@ class ConversionTask(db.Model):
     @staticmethod
     def get_tasks_by_id(id):
         return ConversionTask.query.filter_by(id=id).first()
+
+    @staticmethod
+    def update_task(id, new_format):
+        task = ConversionTask.query.get_or_404(id)
+        task.task_status = ConversionTaskStatus.UPLOADED
+        task.file_new_format = new_format
+
+        db.session.commit()
+        return task
+    
+    @staticmethod
+    def delete_task(id):
+
+        task = ConversionTask.query.get_or_404(id)
+        db.session.delete(task)
+        db.session.commit()
+
+
+class ConversionTaskSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = ConversionTask
+        include_relationships = True
+        load_instance = True
+
+    file_format = EnumField(ConversionTaskFormats)
+    file_new_format = EnumField(ConversionTaskFormats)
+    task_status = EnumField(ConversionTaskStatus)
+    timeStamp = fields.DateTime()
