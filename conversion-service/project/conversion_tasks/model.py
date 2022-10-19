@@ -98,6 +98,23 @@ class ConversionTask(db.Model):
     def get_tasks_by_id(id):
         return ConversionTask.query.filter_by(id=id).first()
 
+    @staticmethod
+    def update_task(id, new_format):
+        task = ConversionTask.query.get_or_404(id)
+        task.task_status = ConversionTaskStatus.UPLOADED
+        task.file_new_format = new_format
+
+        db.session.commit()
+        return task
+    
+    @staticmethod
+    def delete_task(id):
+
+        task = ConversionTask.query.get_or_404(id)
+        db.session.delete(task)
+        db.session.commit()
+
+
 class ConversionTaskSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = ConversionTask

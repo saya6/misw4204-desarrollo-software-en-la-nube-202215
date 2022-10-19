@@ -35,10 +35,28 @@ class ConversionTaskResource(Resource):
             "uploaded_unique_filename": full_unique_filename,
             "converted_unique_filename": full_converted_unique_filename
         }, 200
-
+    
     def get(self, order = 0, max=None):
         tasks = ConversionTask.get_tasks(order, max)
         response = [conversion_task_schema.dump(task) for task in tasks]
-        logging.warning(response)
         
+        return response
+
+    def get(self, id_task):
+        task = ConversionTask.get_tasks_by_id(id_task)
+        response = conversion_task_schema.dump(task)
+        return response
+
+    def put(self, id_task):
+        new_format = request.form.get('new_format')
+        if  not ConversionTask.validate_format(new_format):
+            return {"status":"Error", "response": "bad formatting target"}, 401
+            
+        task = ConversionTask.get_tasks_by_id(id_task)
+        response = conversion_task_schema.dump(task)
+        return response
+
+    def delete(self, id_task):
+        task = ConversionTask.get_tasks_by_id(id_task)
+        response = conversion_task_schema.dump(task)
         return response
