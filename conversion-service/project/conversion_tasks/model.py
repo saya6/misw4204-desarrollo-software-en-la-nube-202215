@@ -104,6 +104,9 @@ class ConversionTask(db.Model):
         task.task_status = ConversionTaskStatus.UPLOADED
         task.file_new_format = new_format
 
+        length = len(task.file_converted_path)
+        task.file_converted_path = ("{}{}").format(task.file_converted_path[0:length-3], new_format.lower())
+
         db.session.commit()
         return task
     
@@ -117,6 +120,10 @@ class ConversionTask(db.Model):
     @staticmethod
     def validate_task_from_user(id_task, id_user):
         return ConversionTask.query.filter_by(id = id_task).filter_by(id_user = id_user).first()    
+    
+    @staticmethod
+    def validate_file_from_user(file_converted_path, id_user):
+        return ConversionTask.query.filter_by(file_converted_path = file_converted_path).filter_by(id_user = id_user).first()    
 
     @staticmethod
     def validate_status_task(id_task):
