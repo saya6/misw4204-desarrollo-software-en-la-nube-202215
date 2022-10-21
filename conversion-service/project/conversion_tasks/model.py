@@ -30,6 +30,7 @@ class ConversionTask(db.Model):
     file_converted_path = db.Column(db.String(250), nullable=False)
     task_status = db.Column(db.Enum(ConversionTaskStatus), nullable=False)
     timeStamp = db.Column(DateTime, default=datetime.datetime.utcnow)
+    celery_task = db.Column(db.String(250), nullable=True)
     user = db.relationship("User", back_populates="conversion_tasks")
 
     def __init__(self, filename, file_new_format, file_source_path, *args, **kwargs):
@@ -46,6 +47,13 @@ class ConversionTask(db.Model):
 
     def set_file_converted_path(self, new_path):
         self.file_converted_path = new_path
+
+    def set_celery_task_id(self, celery_task_id):
+        self.celery_task = celery_task_id
+        db.session.commit()
+
+    def get_celery_task_id(self):
+        return self.celery_task
 
     def get_file_source_path(self):
         return self.file_source_path
@@ -102,7 +110,7 @@ class ConversionTask(db.Model):
     def update_task(id, new_format):
         task = ConversionTask.query.get_or_404(id)
         task.task_status = ConversionTaskStatus.UPLOADED
-        task.file_new_format = new_format
+        task.file_new_format = ConversionTaskFormats[new_format.upper()]
 
         length = len(task.file_converted_path)
         task.file_converted_path = ("{}{}").format(task.file_converted_path[0:length-3], new_format.lower())

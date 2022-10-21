@@ -34,11 +34,11 @@ def create_app(**kwargs):
     # instantiate the app
     app = Flask(__name__)
 
-    if "celery" in kwargs:
-        init_celery(kwargs["celery"], app)
-
     # set config
     app.config.from_object(config[config_name])
+
+    if "celery" in kwargs:
+        init_celery(kwargs["celery"], app)
 
     # set up extensions
     db.init_app(app)

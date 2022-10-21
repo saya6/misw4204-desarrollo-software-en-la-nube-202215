@@ -57,6 +57,7 @@ services:
     command: /start-celeryworker
     volumes:
       - .:/app
+      - datastore:/datastore
     env_file:
       - .env/.dev-sample
     environment:

@@ -42,67 +42,68 @@ services:
     command: /start-celeryworker
     volumes:
       - .:/app
-    env_file:
-      - .env/.dev-sample
-    environment:
-      - FLASK_APP=app
-    depends_on:
-      - redis
-      - db
-
-  celery_beat:
-    build:
-      context: .
-      dockerfile: ./compose/local/flask/Dockerfile
-    image: flask_celery_example_celery_beat
-    command: /start-celerybeat
-    volumes:
-      - .:/app
-    env_file:
-      - .env/.dev-sample
-    environment:
-      - FLASK_APP=app
-    depends_on:
-      - redis
-      - db
-  flower:
-    build:
-      context: .
-      dockerfile: ./compose/local/flask/Dockerfile
-    image: flask_celery_example_celery_flower
-    command: /start-flower
-    volumes:
-      - .:/app
-    env_file:
-      - .env/.dev-sample
-    environment:
-      - FLASK_APP=app
-    ports:
-      - 5557:5555
-    depends_on:
-      - redis
-      - db
-
-  daemon:
-    build:
-      context: .
-      dockerfile: ./compose/local/flask/Dockerfile
-    image: conversion_service_daemon
-    restart: unless-stopped
-    command: /start-daemon
-    volumes:
-      - .:/app
       - datastore:/datastore
     env_file:
       - .env/.dev-sample
     environment:
       - FLASK_APP=app
     depends_on:
+      - redis
       - db
-      - web
-      - celery_worker
-      - celery_beat
-      - flower
+
+  # celery_beat:
+  #   build:
+  #     context: .
+  #     dockerfile: ./compose/local/flask/Dockerfile
+  #   image: flask_celery_example_celery_beat
+  #   command: /start-celerybeat
+  #   volumes:
+  #     - .:/app
+  #   env_file:
+  #     - .env/.dev-sample
+  #   environment:
+  #     - FLASK_APP=app
+  #   depends_on:
+  #     - redis
+  #     - db
+  # flower:
+  #   build:
+  #     context: .
+  #     dockerfile: ./compose/local/flask/Dockerfile
+  #   image: flask_celery_example_celery_flower
+  #   command: /start-flower
+  #   volumes:
+  #     - .:/app
+  #   env_file:
+  #     - .env/.dev-sample
+  #   environment:
+  #     - FLASK_APP=app
+  #   ports:
+  #     - 5557:5555
+  #   depends_on:
+  #     - redis
+  #     - db
+
+  # daemon:
+  #   build:
+  #     context: .
+  #     dockerfile: ./compose/local/flask/Dockerfile
+  #   image: conversion_service_daemon
+  #   restart: unless-stopped
+  #   command: /start-daemon
+  #   volumes:
+  #     - .:/app
+  #     - datastore:/datastore
+  #   env_file:
+  #     - .env/.dev-sample
+  #   environment:
+  #     - FLASK_APP=app
+  #   depends_on:
+  #     - db
+  #     - web
+  #     - celery_worker
+  #     - celery_beat
+  #     - flower
     
   mail_server:
     image: rnwood/smtp4dev:v3

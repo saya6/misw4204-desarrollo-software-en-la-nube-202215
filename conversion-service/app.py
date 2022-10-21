@@ -17,8 +17,7 @@ api.add_resource(SignInResource, '/api/auth/signup')
 api.add_resource(ConversionTaskResource, '/api/task','/api/task/<int:id_task>')
 api.add_resource(TaskResource, '/api/tasks','/api/tasks/<int:order>', '/api/tasks/<int:order>/<int:max>')
 api.add_resource(FileRetrieverResource, '/api/files/<string:filename>')
-
-api.add_resource(ConversionTaskCeleryResource, '/api/taskCelery', '/api/taskCelery/<id_task>')
+api.add_resource(ConversionTaskCeleryResource, '/api/taskCelery', '/api/taskCelery/<int:id_task>')
 
 jwt = JWTManager(app)
 
