@@ -1,6 +1,5 @@
 from project import Resource, request
 from project.users.models import User 
-from project.conversion_engine.engine import ConversionEngine
 from .model import ConversionTask, ConversionTaskSchema
 import uuid
 from flask_jwt_extended import jwt_required, get_jwt_identity
@@ -44,7 +43,7 @@ class ConversionTaskResource(Resource):
     @jwt_required()
     def get(self, id_task):
         if not validate_task(id_task, get_jwt_identity()):
-           return {"status":"Error", "response": "This tasks owns to another user"}, 401 
+           return {"status":"Error", "response": "This task owns to another user"}, 401 
 
         task = ConversionTask.get_tasks_by_id(id_task)
         response = conversion_task_schema.dump(task)
@@ -53,7 +52,7 @@ class ConversionTaskResource(Resource):
     @jwt_required()
     def put(self, id_task):
         if not validate_task(id_task, get_jwt_identity()):
-           return {"status":"Error", "response": "This tasks owns to another user"}, 401 
+           return {"status":"Error", "response": "This task owns to another user"}, 401 
 
         new_format = request.form.get('new_format')
         if  not ConversionTask.validate_format(new_format):
@@ -66,7 +65,7 @@ class ConversionTaskResource(Resource):
     @jwt_required()
     def delete(self, id_task):
         if not validate_task(id_task, get_jwt_identity()):
-           return {"status":"Error", "response": "This tasks owns to another user"}, 401 
+           return {"status":"Error", "response": "This task owns to another user"}, 401 
 
         if not ConversionTask.validate_status_task(id_task):
             return {"status":"Error", "response": "Task is not in PROCESSED status"}, 401
