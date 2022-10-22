@@ -1,3 +1,4 @@
+from urllib import response
 from project import Resource, request
 from project.users.models import User 
 from .model import ConversionTask, ConversionTaskSchema
@@ -57,7 +58,10 @@ class ConversionTaskResource(Resource):
         new_format = request.form.get('new_format')
         if  not ConversionTask.validate_format(new_format):
             return {"status":"Error", "response": "bad formatting target"}, 401
-            
+
+        if not ConversionTask.validate_status_task(id_task):
+            return {"status":"Error", "response": "Task is not in PROCESSED status"}, 401
+        
         task = ConversionTask.update_task(id_task, new_format)
         response = conversion_task_schema.dump(task)
         return response
@@ -71,6 +75,7 @@ class ConversionTaskResource(Resource):
             return {"status":"Error", "response": "Task is not in PROCESSED status"}, 401
 
         ConversionTask.delete_task(id_task)
+        return "", 204
 
 def validate_task(id_task, user_from_jwt): 
     current_user = User.get_by_username(user_from_jwt)
