@@ -76,4 +76,7 @@ password: admin
 ```
 
 Dar clic en: `Dashboard -> Browse -> General -> Node Exported Full`
-Deberá aparecer un dashbaord parecido al siguiente:
+Deberá aparecer un dashboard parecido al siguiente:
+
+![image](https://user-images.githubusercontent.com/98656909/197349300-bad352ce-4872-42ee-bd10-7461895a19f8.png)
+
