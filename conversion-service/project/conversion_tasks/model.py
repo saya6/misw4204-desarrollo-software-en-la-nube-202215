@@ -5,6 +5,7 @@ from marshmallow import fields
 from marshmallow_enum import EnumField
 import datetime
 import enum
+import os
 
 class ConversionTaskStatus(enum.Enum):
     UPLOADED = "UPLOADED"
@@ -101,8 +102,11 @@ class ConversionTask(db.Model):
     @staticmethod
     def update_task(id, new_format):
         task = ConversionTask.query.get_or_404(id)
+
+        ConversionTask.delete_file(task.file_converted_path)
+        
         task.task_status = ConversionTaskStatus.UPLOADED
-        task.file_new_format = new_format
+        task.file_new_format = ConversionTaskFormats[new_format.upper()]
 
         length = len(task.file_converted_path)
         task.file_converted_path = ("{}{}").format(task.file_converted_path[0:length-3], new_format.lower())
@@ -112,8 +116,11 @@ class ConversionTask(db.Model):
     
     @staticmethod
     def delete_task(id):
-
         task = ConversionTask.query.get_or_404(id)
+
+        ConversionTask.delete_file(task.file_source_path)
+        ConversionTask.delete_file(task.file_converted_path)
+
         db.session.delete(task)
         db.session.commit()
 
@@ -122,14 +129,21 @@ class ConversionTask(db.Model):
         return ConversionTask.query.filter_by(id = id_task).filter_by(id_user = id_user).first()    
     
     @staticmethod
-    def validate_file_from_user(file_converted_path, id_user):
-        return ConversionTask.query.filter_by(file_converted_path = file_converted_path).filter_by(id_user = id_user).first()    
+    def validate_file_from_user(file_path, id_user):
+        return ConversionTask.query.filter(
+                (ConversionTask.file_converted_path == file_path)
+                | (ConversionTask.file_source_path == file_path)
+            ).filter_by(id_user = id_user).first()    
 
     @staticmethod
     def validate_status_task(id_task):
         task = ConversionTask.get_tasks_by_id(id_task)    
         return task.task_status == ConversionTaskStatus.PROCESSED
 
+    @staticmethod
+    def delete_file(path):
+        if os.path.exists(path):
+            os.remove(path)
 
 class ConversionTaskSchema(SQLAlchemyAutoSchema):
     class Meta:
