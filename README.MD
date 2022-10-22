@@ -21,6 +21,13 @@ Blazing Fast Audio Converted (BFAC) es un servicio web construido sobre un stack
 
 [URL de máquina virtual para descargar](https://drive.google.com/drive/folders/1JtBJps19i3QfBgdMkRTqWbD3MvmTytx9)
 
+Para ejecutar el sistema desde la máquina virtual, se debe acceder con las credenciales:
+```
+usuario: server
+password: 123456
+```
+Posteriormente, se debe ubicar en la carpeta `misw4204-desarrollo-software-en-la-nube-202215` y hacer uso del comando `make up`, tal como se indica en la sección `ejecución`
+
 # Documentación de API - Postman
 
 [URL de la documentación de API](https://documenter.getpostman.com/view/807412/2s84DrQhAZ#3b9434a5-eb93-440b-8dd1-b913acdb6986)
