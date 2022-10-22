@@ -1,6 +1,6 @@
 # misw4204 - Desarrollo de software en la nube - 202215
 
-# Proyecto: Blazing Fast Audio Converted
+# Proyecto: Blazing Fast Audio Converter
 ## Integrantes del equipo
 * Andres Ramirez - a.ramirezr2@uniandes.edu.co
 * Carlos Andrés García Aljure - ca.garciaa1@uniandes.edu.co
