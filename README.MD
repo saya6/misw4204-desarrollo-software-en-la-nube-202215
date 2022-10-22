@@ -7,6 +7,13 @@
 * Iván Darío Chacón - id.chacon123@uniandes.edu.co
 * Sebastian Aya - s.ayat@uniandes.edu.co
 
+# Entrega 1
+
+[Proyecto 1 entrega 1 - Arquitectura, conclusiones y consideraciones.pdf](https://github.com/saya6/misw4204-desarrollo-software-en-la-nube-202215/files/9845348/Proyecto.1.entrega.1.-.Arquitectura.conclusiones.y.consideraciones.pdf)
+
+[Escenario y Pruebas de Estrés API REST y Batch.pdf](https://github.com/saya6/misw4204-desarrollo-software-en-la-nube-202215/files/9845350/Escenario.y.Pruebas.de.Estres.API.REST.y.Batch.pdf)
+
+
 # Descripción
 Blazing Fast Audio Converted (BFAC) es un servicio web construido sobre un stack de Python + Flask para facilitar la conversión de archivos MP3, WAV y OGG.
 
