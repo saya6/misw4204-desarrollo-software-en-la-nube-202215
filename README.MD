@@ -10,6 +10,14 @@
 # Descripción
 Blazing Fast Audio Converted (BFAC) es un servicio web construido sobre un stack de Python + Flask para facilitar la conversión de archivos MP3, WAV y OGG.
 
+# Máquina virtual de despliegue
+
+[URL de máquina virtual para descargar](https://drive.google.com/drive/folders/1JtBJps19i3QfBgdMkRTqWbD3MvmTytx9)
+
+# Documentación de API - Postman
+
+[URL de la documentación de API](https://documenter.getpostman.com/view/807412/2s84DrQhAZ#3b9434a5-eb93-440b-8dd1-b913acdb6986)
+
 # Requisitos de software para arrancar el proyecto
 - docker
 - docker compose
