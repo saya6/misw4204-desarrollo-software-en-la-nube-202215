@@ -21,6 +21,8 @@ Blazing Fast Audio Converted (BFAC) es un servicio web construido sobre un stack
 
 # Máquina virtual de despliegue
 
+Se usó Oracle VM VirtualBox.
+
 [URL de máquina virtual para descargar](https://drive.google.com/drive/folders/1JtBJps19i3QfBgdMkRTqWbD3MvmTytx9)
 
 Para ejecutar el sistema desde la máquina virtual, se debe acceder con las credenciales:
