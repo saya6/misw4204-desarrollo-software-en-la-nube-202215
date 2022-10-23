@@ -34,6 +34,8 @@ Posteriormente, se debe ubicar en la carpeta `misw4204-desarrollo-software-en-la
 
 [URL de la documentación de API](https://documenter.getpostman.com/view/807412/2s84DrQhAZ#3b9434a5-eb93-440b-8dd1-b913acdb6986)
 
+Ejecuta la colección en Postman y crea un Enviroment agregando la varibale `baseUrl`, la cual debe tener el valor: `http://IP_DEL_SERVICIO:5010/`
+
 # Requisitos de software para arrancar el proyecto
 - docker
 - docker compose
