@@ -1,0 +1,3 @@
+conversion-service/celerybeat-schedule
+**/venv/**
+**/__pycache__
