@@ -38,6 +38,10 @@ Posteriormente, se debe ubicar en la carpeta `misw4204-desarrollo-software-en-la
 
 Ejecuta la colección en Postman y crea un Enviroment agregando la varibale `baseUrl`, la cual debe tener el valor: `http://IP_DEL_SERVICIO:5010/`
 
+# Escenarios de Jmeter
+
+[URL de los escenarios 1 y 2 de pruebas en Jmeter](https://github.com/saya6/misw4204-desarrollo-software-en-la-nube-202215/tree/master/scenarios_jmeter)
+
 # Requisitos de software para arrancar el proyecto
 - docker
 - docker compose
