@@ -12,7 +12,7 @@ def retry(func):
                 func(*args, **kwargs)
                 break
             except Exception as e:
-                print("fallo #{}registrado: {}".format(wait_time, e))
+                print("fallo #{} registrado: {}".format(wait_time, e))
                 time.sleep(0.2)
     return wrapper_retry
 
@@ -47,6 +47,7 @@ def run_daemon(app):
             if tasks.count() > 0 :
                 print("Procesando ({}) tareas...".format(tasks.count()))
                 for task in tasks:
+                    task.update_status_to_processing()
                     dispatch_task(
                         task.id,
                         task.get_file_format(),
@@ -54,7 +55,6 @@ def run_daemon(app):
                         task.get_new_format(),
                         task.get_file_converted_path()
                     )
-                    task.update_status_to_processing()
         time.sleep(1)
 
 
