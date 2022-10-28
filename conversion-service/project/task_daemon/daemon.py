@@ -5,7 +5,18 @@ from project.conversion_tasks.model import ConversionTask
 from project.conversion_engine.engine import ConversionEngine
 from project import ext_celery
 
-# @ext_celery.celery.task(id='project.task_daemon.daemon.dispatch_task')
+def retry(func):
+    def wrapper_retry(*args, **kwargs):
+        for time in range(5):
+            try:
+                func(*args, **kwargs)
+                break
+            except Exception as e:
+                print("fallo #{}registrado: {}".format(time, e))
+                time.sleep(0.2)
+    return wrapper_retry
+
+@retry
 def dispatch_task(task_id, source_file_format, source_file_path, taget_file_format, target_file_path):
     cetask = ConversionEngine(
         source_file_format = source_file_format,
@@ -26,21 +37,24 @@ def dispatch_task(task_id, source_file_format, source_file_path, taget_file_form
          ha finalizado con exito!""".format(taget_file_format)
     )    
     email.send_mail()
+    print("Tarea id={} completada con exito".format(task_id))
 
 def run_daemon(app):
     while True:
         print("Buscando por nuevas tareas sin procesar...")
         with app.app_context():
             tasks = ConversionTask.get_unprocessed_tasks()
-            for task in tasks:
-                task.update_status_to_processing()
-                dispatch_task(
-                    task.id,
-                    task.get_file_format(),
-                    task.get_file_source_path(),
-                    task.get_new_format(),
-                    task.get_file_converted_path()
-                )
+            if tasks.count() > 0 :
+                print("Procesando ({}) tareas...".format(tasks.count()))
+                for task in tasks:
+                    dispatch_task(
+                        task.id,
+                        task.get_file_format(),
+                        task.get_file_source_path(),
+                        task.get_new_format(),
+                        task.get_file_converted_path()
+                    )
+                    task.update_status_to_processing()
         time.sleep(1)
 
 
