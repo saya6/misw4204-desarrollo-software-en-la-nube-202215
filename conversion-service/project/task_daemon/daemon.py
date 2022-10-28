@@ -7,12 +7,12 @@ from project import ext_celery
 
 def retry(func):
     def wrapper_retry(*args, **kwargs):
-        for time in range(5):
+        for wait_time in range(5):
             try:
                 func(*args, **kwargs)
                 break
             except Exception as e:
-                print("fallo #{}registrado: {}".format(time, e))
+                print("fallo #{}registrado: {}".format(wait_time, e))
                 time.sleep(0.2)
     return wrapper_retry
 
