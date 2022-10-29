@@ -7,6 +7,18 @@ dev-build:
 up:
 	cd conversion-service && docker compose up
 
+cloud-web-build:
+	cd conversion-service && docker compose -f cloud-web-docker-compose.yaml build
+
+cloud-web-run: cloud-web-build
+	cd conversion-service && docker compose -f cloud-web-docker-compose.yaml up
+
+cloud-daemon-build:
+	cd conversion-service && docker compose -f cloud-daemon-docker-compose.yaml build
+
+cloud-daemon-run: cloud-daemon-build
+	cd conversion-service && docker compose -f cloud-daemon-docker-compose.yaml up
+
 run: build
 	cd conversion-service && docker compose up -d
 

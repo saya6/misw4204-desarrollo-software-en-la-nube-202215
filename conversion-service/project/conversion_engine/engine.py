@@ -69,9 +69,4 @@ class ConversionEngine():
         sound.export(self.target_file_path, format="wav")
 
     def convert(self):
-        try:
-            self.conver_fn()
-            return True
-        except:
-            # TODO: log the error here
-            return False
+        self.conver_fn()
