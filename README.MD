@@ -11,9 +11,9 @@
 
 [Vídeo sustentación entrega 1](https://drive.google.com/file/d/1xTOVk-f15apvNN3ORDGN1lwRlyJMUxMB/view?usp=sharing)
 
-[Archivo Proyecto 1 entrega 1 - Arquitectura, conclusiones y consideraciones.pdf](https://github.com/saya6/misw4204-desarrollo-software-en-la-nube-202215/files/9845414/Proyecto.1.entrega.1.-.Arquitectura.conclusiones.y.consideraciones.pdf)
+[Arquitectura, conclusiones y consideraciones.pdf](https://github.com/saya6/misw4204-desarrollo-software-en-la-nube-202215/files/9894604/Arquitectura.conclusiones.y.consideraciones.pdf)
 
-[Archivo Escenario y Pruebas de Estrés API REST y Batch.pdf](https://github.com/saya6/misw4204-desarrollo-software-en-la-nube-202215/files/9845350/Escenario.y.Pruebas.de.Estres.API.REST.y.Batch.pdf)
+[Escenario y Pruebas de Estrés API REST y Batch.pdf](https://github.com/saya6/misw4204-desarrollo-software-en-la-nube-202215/files/9894602/Escenario.y.Pruebas.de.Estres.API.REST.y.Batch.pdf)
 
 
 # Descripción
