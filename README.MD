@@ -28,10 +28,18 @@ Ejecuta la colección en Postman y crea un Enviroment agregando la varibale `bas
 
 # Puesta en marcha del proyecto
 
-Clonar el repositorio en la máquina y ejecutar
-```
-make up
-```
+Contar con 3 instancias de GCP compute engine serie N1, tipo  F1-micro con 1 vCPU, 614 MiB RAM, 10 GiB en almacenamiento y una instancia GCP Cloud SQL de PostgreSQL 14.
+
+Clonar el repositorio en dos de las máquinas y realizar los siguiente:
+
+En una máquina se debe ejecutar el web-api, con el siguiente comando : 
+```make cloud-web-run```
+
+En otra máquina se debe ejecutar el worker, con el siguiente comando: 
+```make cloud-daemon-run```
+
+La otra máquina debe ser configurada como un servidor NFS
+
 Nota: si es la primera vez que ejecuta el proyecto, este comando puede tardar varios minutos mientras descarga y compila dependencias.
 
 Para parar todo el stack, presiona `ctrl + c` esto frenara todos los contenedores docker y parara la ejecución del proyecto.
