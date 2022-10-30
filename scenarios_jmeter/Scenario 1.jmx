@@ -10,12 +10,12 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="ip_backend" elementType="Argument">
             <stringProp name="Argument.name">ip_backend</stringProp>
-            <stringProp name="Argument.value">192.168.1.104</stringProp>
+            <stringProp name="Argument.value">http://estudiantesmiso.space</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="port_backend" elementType="Argument">
             <stringProp name="Argument.name">port_backend</stringProp>
-            <stringProp name="Argument.value">5010</stringProp>
+            <stringProp name="Argument.value">80</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -291,7 +291,7 @@
           <hashTree/>
         </hashTree>
         <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
-          <stringProp name="ConstantTimer.delay">60000</stringProp>
+          <stringProp name="ConstantTimer.delay">30000</stringProp>
         </ConstantTimer>
         <hashTree/>
       </hashTree>

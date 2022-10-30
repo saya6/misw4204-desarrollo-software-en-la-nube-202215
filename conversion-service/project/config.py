@@ -19,6 +19,8 @@ class BaseConfig:
 
     CELERY_INCLUDE = ('project.task_daemon',)
 
+    SENDGRID_API_KEY= os.environ.get("SENDGRID_API_KEY", '')
+
 class DevelopmentConfig(BaseConfig):
     """Development configuration"""
     DEBUG = True
