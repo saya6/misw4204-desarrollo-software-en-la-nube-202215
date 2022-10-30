@@ -29,7 +29,7 @@ Ejecuta la colección en Postman y crea un Enviroment agregando la varibale `bas
 
 # Escenarios de prueba
 
-Los escenarios se encuentran en esta [ubicación](https://github.com/saya6/misw4204-desarrollo-software-en-la-nube-202215/tree/develop/scenarios_jmeter), para ejecutarlo debe actualizar el parámetro `file`, es decir, adjuntar el archivo a convertir
+Los escenarios se encuentran en esta [ubicación](https://github.com/saya6/misw4204-desarrollo-software-en-la-nube-202215/tree/master/scenarios_jmeter), para ejecutarlo debe actualizar el parámetro `file`, es decir, adjuntar el archivo a convertir
 
 # Puesta en marcha del proyecto
 
