@@ -13,7 +13,7 @@ El usuario debe estar logueado con la cuenta de la universidad para ver el video
 
 [Video sustentación entrega 2](https://uniandes-my.sharepoint.com/:v:/g/personal/ca_garciaa1_uniandes_edu_co/EUnImg2dc_pIrxtCOVpSK1oBkfaxxWev7BhGXOihut98IA?e=CRNRMM)
 
-[Arquitectura, conclusiones y consideraciones.pdf](https://github.com/saya6/misw4204-desarrollo-software-en-la-nube-202215/files/9894604/Arquitectura.conclusiones.y.consideraciones.pdf)
+[Arquitectura, conclusiones y consideraciones.pdf](https://github.com/saya6/misw4204-desarrollo-software-en-la-nube-202215/files/9894823/Arquitectura.conclusiones.y.consideraciones.pdf)
 
 [Escenario y Pruebas de Estrés API REST y Batch.pdf](https://github.com/saya6/misw4204-desarrollo-software-en-la-nube-202215/files/9894602/Escenario.y.Pruebas.de.Estres.API.REST.y.Batch.pdf)
 
