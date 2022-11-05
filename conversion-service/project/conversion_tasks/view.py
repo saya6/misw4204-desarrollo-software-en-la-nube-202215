@@ -2,6 +2,7 @@ from urllib import response
 from project import Resource, request
 from project.users.models import User 
 from .model import ConversionTask, ConversionTaskSchema
+from project.file_store.file_store import FileStorage
 import uuid
 from flask_jwt_extended import jwt_required, get_jwt_identity
 import logging
@@ -20,17 +21,16 @@ class ConversionTaskResource(Resource):
         new_format = request.form.get('new_format')
         if  not ConversionTask.validate_format(new_format):
             return {"status":"Error", "response": "bad formatting target"}, 401
-        # Save the file into the disk
+        # Save the file into the bucket
         file_identificator = uuid.uuid4()
         full_unique_filename = "{}.{}".format(file_identificator,filename)
-        full_path = "/datastore/{}".format(full_unique_filename)
-        file_to_upload.save(full_path)
-        new_convertion_task = ConversionTask(filename, new_format, full_path).prepare()
+        file_store = FileStorage("miso_bfac_bucket")
+        file_store.save_file(full_unique_filename,file_to_upload.read())
+        new_convertion_task = ConversionTask(filename, new_format, full_unique_filename).prepare()
         converted_filename_parts = filename.split(".")[:-1]
         converted_filename = '.'.join(converted_filename_parts)
         full_converted_unique_filename = "{}.{}.{}".format(file_identificator, converted_filename, new_format.lower())
-        converted_file_full_path = "/datastore/{}".format(full_converted_unique_filename)
-        new_convertion_task.set_file_converted_path(converted_file_full_path)
+        new_convertion_task.set_file_converted_path(full_converted_unique_filename)
 
         user_from_jwt = get_jwt_identity()
         current_user = User.get_by_username(user_from_jwt)

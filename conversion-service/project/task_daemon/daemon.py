@@ -1,5 +1,6 @@
 import time
 
+from project.file_store.file_store import FileStorage
 from project.mail_dispatcher.mailer import MailDispatcher
 from project.conversion_tasks.model import ConversionTask
 from project.conversion_engine.engine import ConversionEngine
@@ -16,18 +17,21 @@ def retry(func):
                 time.sleep(0.2)
     return wrapper_retry
 
-@retry
+# @retry
 def dispatch_task(task_id, source_file_format, source_file_path, taget_file_format, target_file_path):
+    file_store = FileStorage("miso_bfac_bucket")
+    source_binary_file = file_store.get_file(source_file_path)
     cetask = ConversionEngine(
         source_file_format = source_file_format,
         source_file_path = source_file_path,
         taget_file_format = taget_file_format,
         target_file_path = target_file_path
     )
-
     cetask.build()
+    cetask.set_source_file_bytes(source_binary_file)
     cetask.convert()
     current_task = ConversionTask.get_tasks_by_id(task_id)
+    file_store.save_file_from_file(target_file_path, cetask.get_target_file_bytes())
     current_task.update_status_to_processed()
     email = MailDispatcher(
         receiver= current_task.user.email,

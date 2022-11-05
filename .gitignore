@@ -1,3 +1,4 @@
 conversion-service/celerybeat-schedule
 **/venv/**
 **/__pycache__
+conversion-service/project/gcp_service_cloud.json
