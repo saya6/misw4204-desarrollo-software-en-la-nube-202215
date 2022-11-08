@@ -7,16 +7,13 @@
 * Iván Darío Chacón - id.chacon123@uniandes.edu.co
 * Sebastian Aya - s.ayat@uniandes.edu.co
 
-# Entrega 2
+# Entrega 3
 
-El usuario debe estar logueado con la cuenta de la universidad para ver el video.
+[Video sustentación entrega 3](https://drive.google.com/file/d/1ry6feJtpRVIb7E5s_64eYlAyohVshXJZ/view)
 
-[Video sustentación entrega 2](https://uniandes-my.sharepoint.com/:v:/g/personal/ca_garciaa1_uniandes_edu_co/EUnImg2dc_pIrxtCOVpSK1oBkfaxxWev7BhGXOihut98IA?e=CRNRMM)
+[Arquitectura, conclusiones y consideraciones.pdf](https://github.com/saya6/misw4204-desarrollo-software-en-la-nube-202215/files/9964923/Arquitectura.conclusiones.y.consideraciones.pdf)
 
-[Arquitectura, conclusiones y consideraciones.pdf](https://github.com/saya6/misw4204-desarrollo-software-en-la-nube-202215/files/9894823/Arquitectura.conclusiones.y.consideraciones.pdf)
-
-[Escenario y Pruebas de Estrés API REST y Batch.pdf](https://github.com/saya6/misw4204-desarrollo-software-en-la-nube-202215/files/9894602/Escenario.y.Pruebas.de.Estres.API.REST.y.Batch.pdf)
-
+[Escenario y Pruebas de Estrés API REST y Batch.pdf](https://github.com/saya6/misw4204-desarrollo-software-en-la-nube-202215/files/9964926/Escenario.y.Pruebas.de.Estres.API.REST.y.Batch.pdf)
 
 # Descripción
 Blazing Fast Audio Converted (BFAC) es un servicio web construido sobre un stack de Python + Flask para facilitar la conversión de archivos MP3, WAV y OGG.
@@ -33,7 +30,7 @@ Los escenarios se encuentran en esta [ubicación](https://github.com/saya6/misw4
 
 # Puesta en marcha del proyecto
 
-Contar con 3 instancias de GCP compute engine serie N1, tipo  F1-micro con 1 vCPU, 614 MiB RAM, 10 GiB en almacenamiento y una instancia GCP Cloud SQL de PostgreSQL 14.
+Contar con 1 instancia individual y un grupo de instancias de GCP compute engine serie N1, tipo  F1-micro con 1 vCPU, 614 MiB RAM, 10 GiB en almacenamiento, una instancia GCP Cloud SQL de PostgreSQL 14 y un bucket de Cloud Storage.
 
 Clonar el repositorio en dos de las máquinas y realizar los siguiente:
 
