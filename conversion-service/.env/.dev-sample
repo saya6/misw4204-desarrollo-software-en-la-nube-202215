@@ -6,4 +6,5 @@ CELERY_BROKER_URL=redis://redis:6379/0
 CELERY_RESULT_BACKEND=redis://redis:6379/0
 JWT_SECRET_KEY=frase-secreta
 SENDGRID_API_KEY=
-BFAC_ENV=dev
+BFAC_ENV=dev2
+GOOGLE_APPLICATION_CREDENTIALS=project/gcp_service_cloud.json

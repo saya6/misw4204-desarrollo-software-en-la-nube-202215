@@ -1,3 +1,4 @@
+from io import BytesIO, StringIO
 from mimetypes import init
 from types import LambdaType
 from os import path
@@ -11,6 +12,9 @@ class ConversionEngine():
         self.source_file_format = source_file_format
         self.taget_file_format = taget_file_format
         self.target_file_path = target_file_path
+        self.source_file_bytes = None
+        self.target_file_bytes = BytesIO()
+
         self.conver_fn = LambdaType
 
     def prepare(self):
@@ -18,6 +22,12 @@ class ConversionEngine():
         self.taget_file_format = CTF[self.taget_file_format]
         return self
 
+    def set_source_file_bytes(self, byte_array):
+        self.source_file_bytes = BytesIO(byte_array)
+        return self
+
+    def get_target_file_bytes(self):
+        return self.target_file_bytes
 
     def build(self):
         if self.source_file_format == CTF.MP3:
@@ -41,32 +51,35 @@ class ConversionEngine():
             if self.taget_file_format == CTF.WAV:
                 self.conver_fn = self.ogg_to_wav
                 return
+        if self.self.source_file_bytes == None:
+            raise("source file is required")
         print("UNSOPORTED TYPE: {}\n".format(self.source_file_format))
         raise("source or target file format not supported ")
 
     def mp3_to_wav(self):
-        sound = AudioSegment.from_mp3(self.source_file_path)
-        sound.export(self.target_file_path, format="wav")
+        sound = AudioSegment.from_mp3(self.source_file_bytes)
+        sound.export(self.target_file_bytes, format="wav")
+        
 
     def mp3_to_ogg(self):
-        sound = AudioSegment.from_mp3(self.source_file_path)
-        sound.export(self.target_file_path, format="ogg")
+        sound = AudioSegment.from_mp3(self.source_file_bytes)
+        sound.export(self.target_file_bytes, format="ogg")
 
     def wav_to_mp3(self):
-        sound = AudioSegment.from_wav(self.source_file_path)
-        sound.export(self.target_file_path, format="mp3")
+        sound = AudioSegment.from_wav(self.source_file_bytes)
+        sound.export(self.target_file_bytes, format="mp3")
 
     def wav_to_ogg(self):
-        sound = AudioSegment.from_wav(self.source_file_path)
-        sound.export(self.target_file_path, format="ogg")
+        sound = AudioSegment.from_wav(self.source_file_bytes)
+        sound.export(self.target_file_bytes, format="ogg")
 
     def ogg_to_mp3(self):
-        sound = AudioSegment.from_file(self.source_file_path, "ogg")
-        sound.export(self.target_file_path, format="mp3")
+        sound = AudioSegment.from_file(self.source_file_bytes, "ogg")
+        sound.export(self.target_file_bytes, format="mp3")
 
     def ogg_to_wav(self):
-        sound = AudioSegment.from_file(self.source_file_path, "ogg")
-        sound.export(self.target_file_path, format="wav")
+        sound = AudioSegment.from_file(self.source_file_bytes, "ogg")
+        sound.export(self.target_file_bytes, format="wav")
 
     def convert(self):
         self.conver_fn()
