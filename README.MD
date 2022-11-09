@@ -9,7 +9,7 @@
 
 # Entrega 3
 
-[Video sustentación entrega 3](https://drive.google.com/file/d/1ry6feJtpRVIb7E5s_64eYlAyohVshXJZ/view)
+[Video sustentación entrega 3](https://uniandes-my.sharepoint.com/:v:/g/personal/ca_garciaa1_uniandes_edu_co/EXqhHfXFIYJBnYTN7cJ5TSYB-a_cXr5uKnYCKMqKDqi3Fw?e=7zaWJO)
 
 [Arquitectura, conclusiones y consideraciones.pdf](https://github.com/saya6/misw4204-desarrollo-software-en-la-nube-202215/files/9964923/Arquitectura.conclusiones.y.consideraciones.pdf)
 
