@@ -10,15 +10,7 @@ services:
     command: /start-daemon
     volumes:
       - .:/app
-      - /mnt/:/datastore
     env_file:
       - .env/.dev-sample
     environment:
       - FLASK_APP=app
-    depends_on:
-      - mail_server
-
-  mail_server:
-    image: rnwood/smtp4dev:v3
-    ports:
-      - 5011:80

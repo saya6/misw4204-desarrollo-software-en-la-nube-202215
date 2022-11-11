@@ -21,6 +21,8 @@ class BaseConfig:
 
     SENDGRID_API_KEY= os.environ.get("SENDGRID_API_KEY", '')
 
+    GOOGLE_APPLICATION_CREDENTIALS= os.environ.get("GOOGLE_APPLICATION_CREDENTIALS", '')
+
 class DevelopmentConfig(BaseConfig):
     """Development configuration"""
     DEBUG = True
