@@ -16,3 +16,4 @@ marshmallow-sqlalchemy==0.25.0
 marshmallow_enum
 sendgrid
 google-cloud-storage
+google-cloud-pubsub
