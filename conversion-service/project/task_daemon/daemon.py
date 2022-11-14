@@ -54,24 +54,25 @@ def callback_with_app(app):
         # get the task fron the database
         with app.app_context():
             task = ConversionTask.get_tasks_by_id(task_id)
-            task.update_status_to_processing()
-            dispatch_task(
-                task.id,
-                task.get_file_format(),
-                task.get_file_source_path(),
-                task.get_new_format(),
-                task.get_file_converted_path()
-            )
+            if task != None:
+                task.update_status_to_processing()
+                dispatch_task(
+                    task.id,
+                    task.get_file_format(),
+                    task.get_file_source_path(),
+                    task.get_new_format(),
+                    task.get_file_converted_path()
+                )
 
     return callback
 
 def run_daemon(app):
     subscriber = pubsub_v1.SubscriberClient()
     subscription_path = "projects/bfac-366702/subscriptions/conversion_tasks-sub"
-    print("Buscando por nuevas tareas sin procesar...")
     streaming_pull_future =subscriber.subscribe(subscription_path, callback = callback_with_app(app))
     with subscriber:
         try:
+            print("Buscando por nuevas tareas sin procesar...")
             streaming_pull_future.result()
         except TimeoutError:
             streaming_pull_future.cancel()
