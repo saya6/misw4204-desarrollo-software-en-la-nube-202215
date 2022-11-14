@@ -3,9 +3,11 @@ from project import Resource, request
 from project.users.models import User 
 from .model import ConversionTask, ConversionTaskSchema
 from project.file_store.file_store import FileStorage
+from google.cloud import pubsub_v1
 import uuid
 from flask_jwt_extended import jwt_required, get_jwt_identity
 import logging
+import json 
 
 
 conversion_task_schema = ConversionTaskSchema();
@@ -34,12 +36,19 @@ class ConversionTaskResource(Resource):
 
         user_from_jwt = get_jwt_identity()
         current_user = User.get_by_username(user_from_jwt)
-        current_user.add_new_task(new_convertion_task)        
-        return {
+        current_user.add_new_task(new_convertion_task)
+        # enqueue the new conversion task
+        publisher = pubsub_v1.PublisherClient()
+        topic_path = "projects/bfac-366702/topics/conversion_tasks"
+        response = {
             "id": current_user.conversion_tasks[-1].id,
             "uploaded_unique_filename": full_unique_filename,
             "converted_unique_filename": full_converted_unique_filename
-        }, 200
+        }
+        task_message = "{}".format(response["id"]).encode('utf-8')
+        future_response = publisher.publish(topic_path, task_message)
+        response["queue_id"] = future_response.result()
+        return response, 200
     
     @jwt_required()
     def get(self, id_task):
