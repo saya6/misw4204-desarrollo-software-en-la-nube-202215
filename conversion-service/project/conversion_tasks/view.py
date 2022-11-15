@@ -41,13 +41,12 @@ class ConversionTaskResource(Resource):
         publisher = pubsub_v1.PublisherClient()
         topic_path = "projects/bfac-366702/topics/conversion_tasks"
         response = {
-            "id": current_user.conversion_tasks[-1].id,
+            "id": new_convertion_task.id,
             "uploaded_unique_filename": full_unique_filename,
             "converted_unique_filename": full_converted_unique_filename
         }
         task_message = "{}".format(response["id"]).encode('utf-8')
-        future_response = publisher.publish(topic_path, task_message)
-        response["queue_id"] = future_response.result()
+        publisher.publish(topic_path, task_message)
         return response, 200
     
     @jwt_required()
