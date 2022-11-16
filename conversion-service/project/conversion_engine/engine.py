@@ -4,6 +4,7 @@ from types import LambdaType
 from os import path
 from pydub import AudioSegment
 from project.conversion_tasks.model import ConversionTaskFormats as CTF
+import gc
 
 
 class ConversionEngine():
@@ -64,22 +65,37 @@ class ConversionEngine():
     def mp3_to_ogg(self):
         sound = AudioSegment.from_mp3(self.source_file_bytes)
         sound.export(self.target_file_bytes, format="ogg")
+        del sound
+        del self.source_file_bytes
+        gc.collect()
 
     def wav_to_mp3(self):
         sound = AudioSegment.from_wav(self.source_file_bytes)
         sound.export(self.target_file_bytes, format="mp3")
+        del sound
+        del self.source_file_bytes
+        gc.collect()
 
     def wav_to_ogg(self):
         sound = AudioSegment.from_wav(self.source_file_bytes)
         sound.export(self.target_file_bytes, format="ogg")
+        del sound
+        del self.source_file_bytes
+        gc.collect()
 
     def ogg_to_mp3(self):
         sound = AudioSegment.from_file(self.source_file_bytes, "ogg")
         sound.export(self.target_file_bytes, format="mp3")
+        del sound
+        del self.source_file_bytes
+        gc.collect()
 
     def ogg_to_wav(self):
         sound = AudioSegment.from_file(self.source_file_bytes, "ogg")
         sound.export(self.target_file_bytes, format="wav")
+        del sound
+        del self.source_file_bytes
+        gc.collect()
 
     def convert(self):
         self.conver_fn()
