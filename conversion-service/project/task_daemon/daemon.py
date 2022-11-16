@@ -69,7 +69,8 @@ def callback_with_app(app):
 def run_daemon(app):
     subscriber = pubsub_v1.SubscriberClient()
     subscription_path = "projects/bfac-366702/subscriptions/conversion_tasks-sub"
-    streaming_pull_future =subscriber.subscribe(subscription_path, callback = callback_with_app(app))
+    flow_control = pubsub_v1.types.FlowControl(max_messages=1)
+    streaming_pull_future =subscriber.subscribe(subscription_path, callback = callback_with_app(app), flow_control= flow_control)
     with subscriber:
         try:
             print("Buscando por nuevas tareas sin procesar...")
