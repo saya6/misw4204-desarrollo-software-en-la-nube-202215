@@ -5,6 +5,7 @@ from project.mail_dispatcher.mailer import MailDispatcher
 from project.conversion_tasks.model import ConversionTask
 from project.conversion_engine.engine import ConversionEngine
 from google.cloud import pubsub_v1
+import gc
 
 def retry(func):
     def wrapper_retry(*args, **kwargs):
@@ -32,6 +33,9 @@ def dispatch_task(task_id, source_file_format, source_file_path, taget_file_form
     cetask.convert()
     current_task = ConversionTask.get_tasks_by_id(task_id)
     file_store.save_file_from_file(target_file_path, cetask.get_target_file_bytes())
+    del cetask
+    del file_store
+    gc.collect()
     current_task.update_status_to_processed()
     email = MailDispatcher(
         receiver= current_task.user.email,
@@ -48,7 +52,6 @@ def callback_with_app(app):
     def callback(message):
         # process the message
         task_id = int(message.data)
-        message.ack()
         print("Procesando tarea con id ({})".format(task_id))
 
         # get the task fron the database
@@ -63,6 +66,7 @@ def callback_with_app(app):
                     task.get_new_format(),
                     task.get_file_converted_path()
                 )
+            message.ack()
 
     return callback
 
