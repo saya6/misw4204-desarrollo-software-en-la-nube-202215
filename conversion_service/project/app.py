@@ -8,7 +8,6 @@ from flask_jwt_extended import JWTManager
 
 app = create_app()
 api = Api(app)
-celery = ext_celery.celery
 
 api.add_resource(AuthenticationResource, '/api/auth/login')
 api.add_resource(SignInResource, '/api/auth/signup')
