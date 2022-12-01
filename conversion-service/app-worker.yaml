@@ -12,12 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-runtime: python
+runtime: custom
 instance_class: f4
-entrypoint: gunicorn --workers=$(($(nproc) * 2)) --bind :$PORT run_daemon:app
+entrypoint: gunicorn --workers=1 --bind :$PORT run_daemon:app
 env: flex
-runtime_config:
-  python_version: 3
+
 # entrypoint: gunicorn -b :$PORT app:app
 
 # Note: Saving credentials in environment variables is convenient, but not

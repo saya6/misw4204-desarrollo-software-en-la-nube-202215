@@ -17,3 +17,4 @@ marshmallow_enum
 sendgrid
 google-cloud-storage
 google-cloud-pubsub
+ffprobe
