@@ -7,13 +7,14 @@
 * Iván Darío Chacón - id.chacon123@uniandes.edu.co
 * Sebastian Aya - s.ayat@uniandes.edu.co
 
-# Entrega 4
+# Entrega 5
 
-[Video sustentación entrega 4](https://drive.google.com/file/d/1I3J47EDXqZjvPLYl0Qlss5hhhGqyyQBK/view)
+[Video sustentación entrega 5]()
 
-[Arquitectura, conclusiones y consideraciones.pdf](https://github.com/saya6/misw4204-desarrollo-software-en-la-nube-202215/files/10045731/Arquitectura.conclusiones.y.consideraciones.pdf)
+[Arquitectura, conclusiones y consideraciones.pdf](https://github.com/saya6/misw4204-desarrollo-software-en-la-nube-202215/files/10128673/Arquitectura.conclusiones.y.consideraciones.pdf)
 
-[Escenario y Pruebas de Estrés API REST y Batch.pdf](https://github.com/saya6/misw4204-desarrollo-software-en-la-nube-202215/files/10045736/Escenario.y.Pruebas.de.Estres.API.REST.y.Batch.pdf)
+[Escenario y Pruebas de Estrés API REST y Batch.pdf](https://github.com/saya6/misw4204-desarrollo-software-en-la-nube-202215/files/10128677/Escenario.y.Pruebas.de.Estres.API.REST.y.Batch.pdf)
+
 
 # Descripción
 Blazing Fast Audio Converted (BFAC) es un servicio web construido sobre un stack de Python + Flask para facilitar la conversión de archivos MP3, WAV y OGG.
@@ -30,15 +31,16 @@ Los escenarios se encuentran en esta [ubicación](https://github.com/saya6/misw4
 
 # Requisitos para poner en marcha del proyecto
 
-Contar con dos grupos de instancias (worker y web-api) de GCP compute engine mínimo serie N1, tipo  F1-micro con 1 vCPU, 614 MiB RAM, 10 GiB en almacenamiento, una instancia GCP Cloud SQL de PostgreSQL 14 y un bucket de Cloud Storage.
+Hacer uso del servicio App Engine para el worker y el web-api haciendo uso de la consola de GCP, una instancia GCP Cloud SQL de PostgreSQL 14, un bucket de Cloud Storage y un tópico de Pub/Sub.
 
-Clonar el repositorio en dos de las máquinas y realizar los siguiente:
+Clonar el repositorio en una máquina, que tenga instalado el SDK de GCP:
 
-Se debe configurar para ejecutar en las máquinas del web-api (grupos de instancias), el siguiente comando, una vez se haya iniciado el sistema operativo: 
-```make cloud-web-run```
+Para desplegar el Api-Rest, ingresar a la carpeta conversion-service/ del proyecto y ejecutar
+```gcloud app deploy app-web.yaml```
 
-En la otra máquina se debe ejecutar el worker, con el siguiente comando: 
-```make cloud-daemon-run```
+Para desplegar el worker, ingresar a la carpeta conversion-service/ del proyecto y ejecutar
+```gcloud app deploy app-worker.yaml```
+
 
 Importante: el sistema se despliega en la nube, por ende, se debe configurar los servicios que intervienen en la ejecución de Blazing Fast Audio Converted (BFAC), los cuales son:
 
